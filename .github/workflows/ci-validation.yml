@@ -30,6 +30,8 @@ jobs:
     uses: ./.github/workflows/validation.yml
     with:
       environment_name: DEV
+      terraform_environment_name: DEV-TERRAFORM
+      dcm_environment_name: DEV-DCM
       dcm_target: DEV
       terraform_user: GITHUB_DEV_TERRAFORM_SVC
       dcm_user: GITHUB_DEV_DCM_SVC
@@ -40,6 +42,8 @@ jobs:
     uses: ./.github/workflows/validation.yml
     with:
       environment_name: TEST
+      terraform_environment_name: TEST-TERRAFORM
+      dcm_environment_name: TEST-DCM
       dcm_target: TEST
       terraform_user: GITHUB_TEST_TERRAFORM_SVC
       dcm_user: GITHUB_TEST_DCM_SVC

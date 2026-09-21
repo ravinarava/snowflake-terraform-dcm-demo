@@ -7,6 +7,14 @@ on:
         description: GitHub environment containing the Snowflake account configuration
         required: true
         type: string
+      terraform_environment_name:
+        description: GitHub environment mapped to the Terraform Snowflake identity
+        required: true
+        type: string
+      dcm_environment_name:
+        description: GitHub environment mapped to the DCM Snowflake identity
+        required: true
+        type: string
       dcm_target:
         description: DCM manifest target to validate
         required: true
@@ -36,6 +44,8 @@ jobs:
       - name: Validate environment and identity mapping
         env:
           ENVIRONMENT_NAME: ${{ inputs.environment_name }}
+          TERRAFORM_ENVIRONMENT_NAME: ${{ inputs.terraform_environment_name }}
+          DCM_ENVIRONMENT_NAME: ${{ inputs.dcm_environment_name }}
           DCM_TARGET: ${{ inputs.dcm_target }}
           TERRAFORM_USER: ${{ inputs.terraform_user }}
           DCM_USER: ${{ inputs.dcm_user }}
@@ -43,8 +53,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          case "${ENVIRONMENT_NAME}:${DCM_TARGET}:${TERRAFORM_USER}:${DCM_USER}:${TERRAFORM_VAR_FILE}" in
-            DEV:DEV:GITHUB_DEV_TERRAFORM_SVC:GITHUB_DEV_DCM_SVC:environments/dev.tfvars|TEST:TEST:GITHUB_TEST_TERRAFORM_SVC:GITHUB_TEST_DCM_SVC:environments/test.tfvars)
+          case "${ENVIRONMENT_NAME}:${TERRAFORM_ENVIRONMENT_NAME}:${DCM_ENVIRONMENT_NAME}:${DCM_TARGET}:${TERRAFORM_USER}:${DCM_USER}:${TERRAFORM_VAR_FILE}" in
+            DEV:DEV-TERRAFORM:DEV-DCM:DEV:GITHUB_DEV_TERRAFORM_SVC:GITHUB_DEV_DCM_SVC:environments/dev.tfvars|TEST:TEST-TERRAFORM:TEST-DCM:TEST:GITHUB_TEST_TERRAFORM_SVC:GITHUB_TEST_DCM_SVC:environments/test.tfvars)
               echo "Validated ${ENVIRONMENT_NAME} environment, ${DCM_TARGET} target, and workload identities."
               ;;
             *)
@@ -58,9 +68,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
-      name: ${{ inputs.environment_name }}
+      name: ${{ inputs.terraform_environment_name }}
     env:
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
+      SNOWFLAKE_USER: ${{ inputs.terraform_user }}
 
     steps:
       - uses: actions/checkout@v4
@@ -112,9 +123,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment:
-      name: ${{ inputs.environment_name }}
+      name: ${{ inputs.dcm_environment_name }}
     env:
       SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ inputs.dcm_user }}
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
 
     steps:

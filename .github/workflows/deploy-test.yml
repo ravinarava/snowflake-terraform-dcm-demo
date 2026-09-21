@@ -17,10 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     
     environment:
-      name: TEST
+      name: TEST-TERRAFORM
 
     env:
       SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: GITHUB_TEST_TERRAFORM_SVC
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
 
     steps:
@@ -72,10 +73,11 @@ jobs:
     needs: terraform-apply
 
     environment:
-      name: TEST
+      name: TEST-DCM
 
     env:
       SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: GITHUB_TEST_DCM_SVC
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
 
     steps:
