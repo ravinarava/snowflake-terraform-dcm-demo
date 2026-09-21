@@ -23,10 +23,6 @@ on:
         description: Environment-specific Terraform variable file
         required: true
         type: string
-      snowflake_account:
-        description: Snowflake account identifier
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -64,7 +60,7 @@ jobs:
     environment:
       name: ${{ inputs.environment_name }}
     env:
-      SNOWFLAKE_ACCOUNT: ${{ inputs.snowflake_account }}
+      SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
       SNOWFLAKE_USER: ${{ inputs.terraform_user }}
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
 
@@ -116,7 +112,7 @@ jobs:
     environment:
       name: ${{ inputs.environment_name }}
     env:
-      SNOWFLAKE_ACCOUNT: ${{ inputs.snowflake_account }}
+      SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
       SNOWFLAKE_USER: ${{ inputs.dcm_user }}
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
 
