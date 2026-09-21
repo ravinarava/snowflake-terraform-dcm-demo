@@ -82,6 +82,21 @@ jobs:
         with:
           use-oidc: true
 
+      - name: Verify GitHub OIDC claims
+        run: |
+          python3 - <<'PY'
+          import base64
+          import json
+          import os
+
+          token = os.environ["SNOWFLAKE_TOKEN"]
+          payload = token.split(".")[1]
+          payload += "=" * (-len(payload) % 4)
+          claims = json.loads(base64.urlsafe_b64decode(payload))
+          print(f"iss={claims.get('iss')}")
+          print(f"sub={claims.get('sub')}")
+          print(f"aud={claims.get('aud')}")
+
       - name: Verify Snowflake Terraform Identity
         env:
           SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
@@ -135,6 +150,21 @@ jobs:
       - uses: snowflakedb/snowflake-actions@v3
         with:
           use-oidc: true
+
+      - name: Verify GitHub OIDC claims
+        run: |
+          python3 - <<'PY'
+          import base64
+          import json
+          import os
+
+          token = os.environ["SNOWFLAKE_TOKEN"]
+          payload = token.split(".")[1]
+          payload += "=" * (-len(payload) % 4)
+          claims = json.loads(base64.urlsafe_b64decode(payload))
+          print(f"iss={claims.get('iss')}")
+          print(f"sub={claims.get('sub')}")
+          print(f"aud={claims.get('aud')}")
 
       - name: Verify Snowflake DCM Identity
         run: snow sql -q "select CURRENT_USER(), CURRENT_ROLE(), CURRENT_ACCOUNT()" -x
