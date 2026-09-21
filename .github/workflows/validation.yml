@@ -71,6 +71,7 @@ jobs:
       name: ${{ inputs.terraform_environment_name }}
     env:
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
+      SNOWFLAKE_USER: ${{ inputs.dcm_user }}
 
     steps:
       - uses: actions/checkout@v4
@@ -125,6 +126,7 @@ jobs:
       name: ${{ inputs.dcm_environment_name }}
     env:
       SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ inputs.dcm_user }}
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
 
     steps:
