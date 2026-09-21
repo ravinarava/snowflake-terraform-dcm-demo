@@ -60,17 +60,20 @@ jobs:
     environment:
       name: ${{ inputs.environment_name }}
     env:
-      SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: snowflakedb/snowflake-actions@v3
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
         with:
           use-oidc: true
 
       - name: Verify Snowflake Terraform Identity
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
         run: snow sql -q "select CURRENT_USER(), CURRENT_ROLE(), CURRENT_ACCOUNT()" -x
 
       - uses: hashicorp/setup-terraform@v3
