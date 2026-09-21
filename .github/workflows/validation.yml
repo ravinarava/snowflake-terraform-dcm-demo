@@ -61,7 +61,6 @@ jobs:
       name: ${{ inputs.environment_name }}
     env:
       SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER: OIDC
-      SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_USER }}
 
     steps:
       - uses: actions/checkout@v4
