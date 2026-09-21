@@ -15,6 +15,38 @@ CREATE USER IF NOT EXISTS GITHUB_TEST_TERRAFORM_SVC
 CREATE USER IF NOT EXISTS GITHUB_TEST_DCM_SVC
   TYPE = SERVICE;
 
+ALTER USER GITHUB_DEV_TERRAFORM_SVC SET
+  WORKLOAD_IDENTITY = (
+    TYPE = OIDC
+    ISSUER = 'https://token.actions.githubusercontent.com'
+    SUBJECT = 'repo:ravinara@312860965/snowflake-terraform-dcm-demo@1379201739:environment:DEV-TERRAFORM'
+    OIDC_AUDIENCE_LIST = ('snowflakecomputing.com')
+  );
+
+ALTER USER GITHUB_DEV_DCM_SVC SET
+  WORKLOAD_IDENTITY = (
+    TYPE = OIDC
+    ISSUER = 'https://token.actions.githubusercontent.com'
+    SUBJECT = 'repo:ravinara@312860965/snowflake-terraform-dcm-demo@1379201739:environment:DEV-DCM'
+    OIDC_AUDIENCE_LIST = ('snowflakecomputing.com')
+  );
+
+ALTER USER GITHUB_TEST_TERRAFORM_SVC SET
+  WORKLOAD_IDENTITY = (
+    TYPE = OIDC
+    ISSUER = 'https://token.actions.githubusercontent.com'
+    SUBJECT = 'repo:ravinara@312860965/snowflake-terraform-dcm-demo@1379201739:environment:TEST-TERRAFORM'
+    OIDC_AUDIENCE_LIST = ('snowflakecomputing.com')
+  );
+
+ALTER USER GITHUB_TEST_DCM_SVC SET
+  WORKLOAD_IDENTITY = (
+    TYPE = OIDC
+    ISSUER = 'https://token.actions.githubusercontent.com'
+    SUBJECT = 'repo:ravinara@312860965/snowflake-terraform-dcm-demo@1379201739:environment:TEST-DCM'
+    OIDC_AUDIENCE_LIST = ('snowflakecomputing.com')
+  );
+
 GRANT ROLE GITHUB_DEV_TERRAFORM_ROLE
   TO USER GITHUB_DEV_TERRAFORM_SVC;
 
