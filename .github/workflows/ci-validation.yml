@@ -34,8 +34,7 @@ jobs:
       terraform_user: GITHUB_DEV_TERRAFORM_SVC
       dcm_user: GITHUB_DEV_DCM_SVC
       terraform_var_file: environments/dev.tfvars
-    secrets:
-      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      snowflake_account: AL32991
 
   validate-test:
     if: github.event_name == 'workflow_dispatch' && inputs.validation_environment == 'TEST'
@@ -46,5 +45,4 @@ jobs:
       terraform_user: GITHUB_TEST_TERRAFORM_SVC
       dcm_user: GITHUB_TEST_DCM_SVC
       terraform_var_file: environments/test.tfvars
-    secrets:
-      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      snowflake_account: AL32991
