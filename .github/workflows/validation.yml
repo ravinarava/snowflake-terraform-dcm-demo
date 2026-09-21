@@ -54,7 +54,7 @@ jobs:
           set -euo pipefail
 
           case "${ENVIRONMENT_NAME}:${TERRAFORM_ENVIRONMENT_NAME}:${DCM_ENVIRONMENT_NAME}:${DCM_TARGET}:${TERRAFORM_USER}:${DCM_USER}:${TERRAFORM_VAR_FILE}" in
-            DEV:DEV-TERRAFORM:DEV-DCM:DEV:GITHUB_DEV_TERRAFORM_SVC:GITHUB_DEV_DCM_SVC:environments/dev.tfvars|TEST:TEST-TERRAFORM:TEST-DCM:TEST:GITHUB_TEST_TERRAFORM_SVC:GITHUB_TEST_DCM_SVC:environments/test.tfvars)
+            DEV:DEV-DCM:DEV-DCM:DEV:GITHUB_DEV_DCM_SVC:GITHUB_DEV_DCM_SVC:environments/dev.tfvars|TEST:TEST-DCM:TEST-DCM:TEST:GITHUB_TEST_DCM_SVC:GITHUB_TEST_DCM_SVC:environments/test.tfvars)
               echo "Validated ${ENVIRONMENT_NAME} environment, ${DCM_TARGET} target, and workload identities."
               ;;
             *)

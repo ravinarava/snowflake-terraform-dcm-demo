@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     
     environment:
-      name: TEST-TERRAFORM
+      name: TEST-DCM
 
     env:
       SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
